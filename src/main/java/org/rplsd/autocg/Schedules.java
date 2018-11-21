@@ -16,6 +16,9 @@ public class Schedules {
     ArrayList<ArrayList<Schedule>> temp = new ArrayList<ArrayList<Schedule>>(Constant.WEEKDAYS.size());
     for (int i = 0; i < Constant.WEEKDAYS.size(); i++) {
       ArrayList<Schedule> _temp = new ArrayList<>(Constant.DAY_END - Constant.DAY_START);
+      for (int j = 0; j < Constant.DAY_END - Constant.DAY_START; j++) {
+        _temp.add(null);
+      }
       temp.add(_temp);
     }
     this.schedules = temp;
@@ -31,7 +34,6 @@ public class Schedules {
   public ArrayList<ArrayList<Schedule>> getSchedules() {
     return schedules;
   }
-
 
   public class Schedule {
     private Classrooms.Classroom classroom;

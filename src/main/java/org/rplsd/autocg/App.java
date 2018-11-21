@@ -42,8 +42,6 @@ public class App {
       AutoCGLexer lexer = new AutoCGLexer(CharStreams.fromFileName("./src/main/autocg/test.autocg"));
       AutoCGParser parser = new AutoCGParser(new CommonTokenStream(lexer));
       AutoCGListenerImplementation listener = new AutoCGListenerImplementation();
-      // ParseTree parseTree = parser.parse();
-      // ParseTreeWalker.DEFAULT.walk(listener, parseTree);
       parser.parse().enterRule(listener);
       // Classrooms classrooms = Classrooms.getInstance();
       // System.out.println(classrooms.getClassroomByName("7602").getFacilities().toString());

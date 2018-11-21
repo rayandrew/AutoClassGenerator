@@ -18,6 +18,15 @@ public class Lecturers {
     return lecturers;
   }
 
+  public ArrayList<ArrayList<Boolean>> getLecturerAvailabilityByName(String name) {
+    for (Lecturer lecturer : lecturers) {
+      if(lecturer.getName().equals(name)) {
+        return lecturer.getAvailability();
+      }
+    }
+    return null;
+  }
+
   public void addLecturer(String name) {
     lecturers.add(new Lecturer(name));
   }

@@ -15,6 +15,9 @@ public class StatementListener extends AutoCGBaseListener {
     if (ctx.create_lecture_stmt() != null) {
       ctx.create_lecture_stmt().enterRule(new LectureListener());
     }
+    if (ctx.create_constraint_stmt() != null) {
+      ctx.create_constraint_stmt().enterRule(new ConstraintListener());
+    }
   }
 
   @Override

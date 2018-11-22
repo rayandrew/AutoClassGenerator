@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.rplsd.autocg.util.Pair;
 import org.rplsd.autocg.scheduler.Schedules;
-import org.rplsd.autocg.scheduler.interfaces.Constraint;
+import org.rplsd.autocg.scheduler.Constraints.Constraint;
 
 public class RestrictedTime implements Constraint {
   private HashMap<String, List<Pair<Integer, Integer>>> restrictedTime = new HashMap<>();

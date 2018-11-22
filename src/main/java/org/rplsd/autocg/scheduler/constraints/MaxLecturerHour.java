@@ -3,7 +3,7 @@ package org.rplsd.autocg.scheduler.constraints;
 import java.util.ArrayList;
 
 import org.rplsd.autocg.scheduler.Schedules;
-import org.rplsd.autocg.scheduler.interfaces.Constraint;
+import org.rplsd.autocg.scheduler.Constraints.Constraint;;
 
 public class MaxLecturerHour implements Constraint {
   private int maxLecturerHour;

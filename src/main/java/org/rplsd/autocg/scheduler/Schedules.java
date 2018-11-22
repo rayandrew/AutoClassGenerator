@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
-import org.rplsd.autocg.scheduler.interfaces.Constraint;
+import org.rplsd.autocg.scheduler.Constraints.Constraint;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class Schedules {
   private transient Classrooms classrooms = Classrooms.getInstance();
   private transient Lecturers lecturers = Lecturers.getInstance();
   private transient Courses courses = Courses.getInstance();
-  private List<Constraint> constraints = new ArrayList<>();
+  private transient Constraints constraints = Constraints.getInstance();
 
   private ArrayList<ArrayList<Schedule>> schedules;
 
@@ -42,7 +42,7 @@ public class Schedules {
   /**
    * @return the constraints
    */
-  public List<Constraint> getConstraints() {
+  public Constraints getConstraints() {
     return constraints;
   }
 
@@ -54,20 +54,15 @@ public class Schedules {
   }
 
   public void registerConstraint(Constraint constraint) {
-    this.constraints.add(constraint);
+    constraints.addConstraint(constraint);
   }
 
   public void unregisterConstraint(Constraint constraint) {
-    this.constraints.remove(constraint);
+    constraints.removeConstraint(constraint);
   }
 
   protected Boolean checkConstraints(int day, int time) {
-    if (this.constraints.isEmpty())
-      return true;
-
-    // Notify each of the constraint in the list of registered constraint
-    return this.constraints.stream().map((elem) -> elem.isPassed(single_instance, day, time))
-        .reduce(Boolean::logicalAnd).get();
+    return constraints.checkConstraints(single_instance, day, time);
   }
 
   private Schedules() {

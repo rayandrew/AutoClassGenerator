@@ -26,16 +26,4 @@ public class StatementListener extends AutoCGBaseListener {
       ctx.create_constraint_stmt().enterRule(new ConstraintListener());
     }
   }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>
-   * The default implementation does nothing.
-   * </p>
-   */
-  @Override
-  public void exitStmt(StmtContext ctx) {
-
-  }
 }

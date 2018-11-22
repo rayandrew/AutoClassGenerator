@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import com.google.gson.annotations.Expose;
+
 @SuppressWarnings("serial")
 public class Classrooms {
   private static Classrooms single_instance = null;
@@ -77,31 +79,6 @@ public class Classrooms {
   }
 
   public ArrayList<Classroom> suitableClassroomsForCourse(Courses.Course course) {
-    // ArrayList<Classroom> classroom = new ArrayList<>();
-
-    // for (HashMap.Entry<String, Classroom> entryClassroom : classrooms.entrySet())
-    // {
-    // boolean cond = true;
-    // for (HashMap.Entry<String, Integer> entryCourseReqs :
-    // course.getRequirements().entrySet()) {
-    // Integer facilitiesValue =
-    // entryClassroom.getValue().getFacilities().get(entryCourseReqs.getKey());
-    // if (facilitiesValue == null || facilitiesValue < entryCourseReqs.getValue())
-    // {
-    // cond = false;
-    // break;
-    // } else {
-    // cond = true;
-    // }
-    // }
-
-    // if (cond) {
-    // classroom.add(entryClassroom.getValue());
-    // }
-    // }
-
-    // return classroom;
-
     ArrayList<Classroom> suitableClassrooms = new ArrayList<>();
 
     for (Classroom classroom : classrooms) {
@@ -125,7 +102,9 @@ public class Classrooms {
   }
 
   public class Classroom {
-    private String name;
+    @Expose
+    String name;
+    @Expose
     private HashMap<String, Integer> facilities;
     private transient ArrayList<ArrayList<Boolean>> availability;
 

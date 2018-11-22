@@ -3,6 +3,8 @@ package org.rplsd.autocg.scheduler;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.google.gson.annotations.Expose;
+
 public class Courses {
   private static Courses single_instance = null;
   private ArrayList<Course> courses = new ArrayList<>();
@@ -33,7 +35,9 @@ public class Courses {
   }
 
   public class Course {
+    @Expose
     private String courseName;
+    @Expose
     private HashMap<String, Integer> requirements;
     private int duration;
 

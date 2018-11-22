@@ -15,16 +15,4 @@ public class StatementListListener extends AutoCGBaseListener {
   public void enterStmt_list(Stmt_listContext ctx) {
     ctx.stmt().forEach(stmt -> stmt.enterRule(new StatementListener()));
   }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>
-   * The default implementation does nothing.
-   * </p>
-   */
-  @Override
-  public void exitStmt_list(Stmt_listContext ctx) {
-
-  }
 }

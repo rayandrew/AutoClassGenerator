@@ -1,6 +1,6 @@
 /**
   Creating CLASSROOM
-  Name: 7602
+  Name: 7601
   Facilities :
   - Capacity : 10
   - AC : 3
@@ -12,12 +12,28 @@ CLASSROOM 7601 (
   BLA 3
 );
 
+/**
+  Creating CLASSROOM
+  Name: 7602
+  Facilities :
+  - Capacity : 100
+  - AC : 3
+  - BLA : 3
+*/
 CLASSROOM 7602 (
   CAPACITY 100,
   AC 3,
   BLA 3
 );
 
+/**
+  Creating CLASSROOM
+  Name: 7603
+  Facilities :
+  - Capacity : 1000
+  - AC : 3
+  - BLA : 3
+*/
 CLASSROOM 7603 (
   CAPACITY 1000,
   AC 3,
@@ -35,11 +51,20 @@ CLASSROOM 7603 (
 */
 COURSE IF4070 (
   DURATION 2,
-  CAPACITY 5,
+  CAPACITY 3,
   AC 3,
   BLA 3
 );
 
+/**
+  Creating COURSE
+  Name: IF4070
+  DURATION: 2 hours
+  Facilities :
+  - Capacity : 5
+  - AC : 3
+  - BLA : 3
+*/
 COURSE IF4071 (
   DURATION 2,
   CAPACITY 5,
@@ -47,6 +72,15 @@ COURSE IF4071 (
   BLA 3
 );
 
+/**
+  Creating COURSE
+  Name: IF4070
+  DURATION: 2 hours
+  Facilities :
+  - Capacity : 5
+  - AC : 3
+  - BLA : 3
+*/
 COURSE IF4072 (
   DURATION 2,
   CAPACITY 5,
@@ -72,11 +106,21 @@ LECTURER IMAM (
   FRIDAY (16-17)
 );
 
+/**
+  Creating LECTURER
+  Name: AYU
+  Available:
+  - Monday : 7 - 17
+  - Tuesday :  7 - 17
+  - Wednesday : 7 - 17
+  - Thursday : 7 - 17
+  - Friday : 7 - 17
+*/
+LECTURER AYU;
+
 CONSTRAINT (
   MAX LECTURER HOUR 10,
   RESTRICTED (
-    MONDAY (12-14, 16-17),
-    TUESDAY (12-14, 16-17),
-    WEDNESDAY (16-17)
+    MONDAY (12-14, 16-17)
   )
 );

@@ -33,16 +33,4 @@ public class CourseListener extends AutoCGBaseListener {
 
     courses.addCourse(name, requirements, duration);
   }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>
-   * The default implementation does nothing.
-   * </p>
-   */
-  @Override
-  public void exitCreate_course_stmt(Create_course_stmtContext ctx) {
-
-  }
 }

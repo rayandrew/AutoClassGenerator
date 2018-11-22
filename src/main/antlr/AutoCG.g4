@@ -30,7 +30,7 @@ create_course_stmt:
 create_lecture_stmt:
 	K_LECTURER lecture_name (
 		OPEN_PAR lecture_def (COMMA lecture_def)* CLOSE_PAR
-	);
+	)?;
 
 create_constraint_stmt:
 	K_CONSTRAINT (

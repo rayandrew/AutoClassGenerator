@@ -2,7 +2,12 @@ package org.rplsd.autocg.scheduler;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.StringBuilder;
 import java.util.List;
 
 import org.rplsd.autocg.scheduler.Constraints.Constraint;
@@ -11,12 +16,16 @@ import java.util.ArrayList;
 
 public class Schedules {
   private static Schedules single_instance = null;
-  private transient Classrooms classrooms = Classrooms.getInstance();
-  private transient Lecturers lecturers = Lecturers.getInstance();
-  private transient Courses courses = Courses.getInstance();
-  private transient Constraints constraints = Constraints.getInstance();
 
-  private ArrayList<ArrayList<Schedule>> schedules;
+  private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+
+  private Classrooms classrooms = Classrooms.getInstance();
+  private Lecturers lecturers = Lecturers.getInstance();
+  private Courses courses = Courses.getInstance();
+  private Constraints constraints = Constraints.getInstance();
+
+  @Expose
+  ArrayList<ArrayList<Schedule>> schedules;
 
   public static Schedules getInstance() {
     if (single_instance == null)
@@ -122,7 +131,7 @@ public class Schedules {
               if (generateSchedule(nextClassRequirementIndex, nextHour))
                 return true;
 
-              schedules.get(day).set(time, null);
+              // schedules.get(day).set(time, null);
               suitableClassroom.getAvailability().get(day).set(time, true);
               lecturer.getAvailability().get(day).set(time, true);
             }
@@ -134,16 +143,75 @@ public class Schedules {
     return false;
   }
 
+  public void saveJSON(String filePath) {
+    try {
+      File file = new File(filePath);
+      file.getParentFile().mkdirs();
+      FileWriter writer = new FileWriter(file);
+      gson.toJson(this, writer);
+      writer.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   @Override
   public String toString() {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
     return gson.toJson(this);
   }
 
+  public void outputSchedule() {
+    System.out.println(
+        String.format("%10s %15s %15s %15s %15s %15s", "Time", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"));
+
+    for (int time = 0; time < Constants.DAY_END - Constants.DAY_START; time++) {
+      StringBuilder str = new StringBuilder();
+      str.append(String.format("%10s", time + Constants.DAY_START + ".00"));
+      for (int day = 0; day < Constants.WEEKDAYS.size(); day++) {
+        Schedule schedule = getSchedules().get(day).get(time);
+        if (schedule != null) {
+          str.append(String.format("%2s [%2s][%2s] %2s %5s", " ", schedule.getClassroom().getName(),
+              schedule.getCourse().getCourseName(), schedule.getLecturer().getName(), " "));
+        } else {
+          str.append(String.format("%10s %13s", " ", " "));
+        }
+      }
+      System.out.println(str.toString());
+    }
+  }
+
+  // @Override
+  // public String toString() {
+  // StringBuilder str = new StringBuilder();
+  // str.append(String.format("%10s %15s %15s %15s %15s %15s\n", "Time", "Monday",
+  // "Tuesday", "Wednesday", "Thursday",
+  // "Friday"));
+
+  // for (int time = 0; time < Constants.DAY_END - Constants.DAY_START; time++) {
+  // str.append(String.format("%10s", time + Constants.DAY_START + ".00"));
+  // for (int day = 0; day < Constants.WEEKDAYS.size(); day++) {
+  // Schedule schedule = schedules.get(day).get(time);
+  // if (schedule != null) {
+  // str.append(String.format("%2s [%2s][%2s] %2s %5s", " ",
+  // schedule.getClassroom().getName(),
+  // schedule.getCourse().getCourseName(), schedule.getLecturer().getName(), ""));
+  // } else {
+  // str.append(String.format("%10s %13s", " ", " "));
+  // }
+  // }
+  // str.append(str.toString() + "\n");
+  // }
+
+  // return str.toString();
+  // }
+
   public class Schedule {
-    private Classrooms.Classroom classroom;
-    private Lecturers.Lecturer lecturer;
-    private Courses.Course course;
+    @Expose
+    Classrooms.Classroom classroom;
+    @Expose
+    Lecturers.Lecturer lecturer;
+    @Expose
+    Courses.Course course;
 
     public Schedule(Classrooms.Classroom classroom, Lecturers.Lecturer lecturer, Courses.Course course) {
       this.classroom = classroom;

@@ -28,16 +28,4 @@ public class ClassroomListener extends AutoCGBaseListener {
 
     classrooms.addClassroom(name, facilities);
   }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>
-   * The default implementation does nothing.
-   * </p>
-   */
-  @Override
-  public void exitCreate_class_room_stmt(Create_class_room_stmtContext ctx) {
-
-  }
 }

@@ -20,12 +20,13 @@ public class LectureListener extends AutoCGBaseListener {
     Lecturers lecturers = Lecturers.getInstance();
 
     ArrayList<ArrayList<Boolean>> temp = new ArrayList<ArrayList<Boolean>>(Constants.WEEKDAYS.size());
+    boolean initialValue = ctx.lecture_def().size() > 0 ? false : true;
 
-    for (int i = 0; i < Constants.WEEKDAYS.size(); i++) {
+    for (int day = 0; day < Constants.WEEKDAYS.size(); day++) {
       ArrayList<Boolean> _temp = new ArrayList<>(Constants.DAY_END - Constants.DAY_START);
 
-      for (int j = 0; j < Constants.DAY_END - Constants.DAY_START; j++) {
-        _temp.add(false);
+      for (int time = 0; time < Constants.DAY_END - Constants.DAY_START; time++) {
+        _temp.add(initialValue);
       }
 
       temp.add(_temp);
@@ -45,24 +46,6 @@ public class LectureListener extends AutoCGBaseListener {
       }
     }
 
-    // System.out.println(ctx.lecture_name().any_name().children.get(0).toString());
-
-    // for (ArrayList<Boolean> cek : temp) {
-    // System.out.println(cek.toString());
-    // }
-
     lecturers.addLecturer(ctx.lecture_name().any_name().children.get(0).toString(), temp);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>
-   * The default implementation does nothing.
-   * </p>
-   */
-  @Override
-  public void exitCreate_lecture_stmt(Create_lecture_stmtContext ctx) {
-
   }
 }

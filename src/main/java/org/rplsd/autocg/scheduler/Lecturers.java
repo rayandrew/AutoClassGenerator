@@ -1,12 +1,12 @@
 package org.rplsd.autocg.scheduler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import com.google.gson.annotations.Expose;
 
 public class Lecturers {
   private static Lecturers single_instance = null;
   private ArrayList<Lecturer> lecturers = new ArrayList<>();
-  private HashMap<String, ArrayList<ArrayList<Boolean>>> availability = new HashMap<>();
 
   public static Lecturers getInstance() {
     if (single_instance == null)
@@ -57,6 +57,7 @@ public class Lecturers {
   }
 
   public class Lecturer {
+    @Expose
     private String name;
     private transient ArrayList<ArrayList<Boolean>> availability;
 

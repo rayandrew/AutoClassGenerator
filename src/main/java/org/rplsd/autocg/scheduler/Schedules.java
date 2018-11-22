@@ -31,13 +31,13 @@ public class Schedules {
     this.constraints.remove(constraint);
   }
 
-  protected Boolean checkConstraints(Classrooms.Classroom classroom, int day, int time) {
+  protected Boolean checkConstraints(int day, int time) {
     if (this.constraints.isEmpty())
       return true;
 
     // Notify each of the constraint in the list of registered constraint
-    return this.constraints.stream().map((elem) -> elem.isPassed(classroom, day, time)).reduce(Boolean::logicalAnd)
-        .get();
+    return this.constraints.stream().map((elem) -> elem.isPassed(single_instance, day, time))
+        .reduce(Boolean::logicalAnd).get();
   }
 
   private Schedules() {
@@ -65,7 +65,7 @@ public class Schedules {
   }
 
   private boolean checkReqsAndConstraints(Classrooms.Classroom classroom, int day, int time) {
-    return classroom.getAvailability().get(day).get(time) && checkConstraints(classroom, day, time);
+    return classroom.getAvailability().get(day).get(time) && checkConstraints(day, time);
   }
 
   public boolean generateSchedule(int courseIndex, int currentHour) {

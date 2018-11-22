@@ -39,6 +39,7 @@ public class Courses {
     private String courseName;
     @Expose
     private HashMap<String, Integer> requirements;
+    @Expose
     private int duration;
 
     public Course(String courseName, HashMap<String, Integer> requirements, int duration) {

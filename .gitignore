@@ -39,6 +39,6 @@ bin/
 
 .antlr/
 
-Parser/
+parser/
 
 result/

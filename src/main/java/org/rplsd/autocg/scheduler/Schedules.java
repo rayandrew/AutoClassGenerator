@@ -180,31 +180,6 @@ public class Schedules {
     }
   }
 
-  // @Override
-  // public String toString() {
-  // StringBuilder str = new StringBuilder();
-  // str.append(String.format("%10s %15s %15s %15s %15s %15s\n", "Time", "Monday",
-  // "Tuesday", "Wednesday", "Thursday",
-  // "Friday"));
-
-  // for (int time = 0; time < Constants.DAY_END - Constants.DAY_START; time++) {
-  // str.append(String.format("%10s", time + Constants.DAY_START + ".00"));
-  // for (int day = 0; day < Constants.WEEKDAYS.size(); day++) {
-  // Schedule schedule = schedules.get(day).get(time);
-  // if (schedule != null) {
-  // str.append(String.format("%2s [%2s][%2s] %2s %5s", " ",
-  // schedule.getClassroom().getName(),
-  // schedule.getCourse().getCourseName(), schedule.getLecturer().getName(), ""));
-  // } else {
-  // str.append(String.format("%10s %13s", " ", " "));
-  // }
-  // }
-  // str.append(str.toString() + "\n");
-  // }
-
-  // return str.toString();
-  // }
-
   public class Schedule {
     @Expose
     Classrooms.Classroom classroom;

@@ -1,15 +1,21 @@
-package org.rplsd.autocg;
+package org.rplsd.autocg.scheduler;
 
 import org.rplsd.autocg.Util.Pair;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class ScheduleConstraint {
   private static ScheduleConstraint single_instance = null;
   private Set<Pair<Integer, Integer>> restrictedTime;
   private int maxLecturerHour;
+
+  public static ScheduleConstraint getInstance() {
+    if (single_instance == null)
+      single_instance = new ScheduleConstraint();
+
+    return single_instance;
+  }
 
   private ScheduleConstraint() {
     restrictedTime = new HashSet<>();
@@ -32,19 +38,12 @@ public class ScheduleConstraint {
   public void addRestrictedTime(int day, int hour) {
     restrictedTime.add(new Pair<>(day, hour));
   }
-  
+
   public int getMaxLecturerHour() {
     return maxLecturerHour;
   }
 
   public void setMaxLecturerHour(int maxLecturerHour) {
     this.maxLecturerHour = maxLecturerHour;
-  }
-
-  public static ScheduleConstraint getInstance() {
-    if (single_instance == null)
-      single_instance = new ScheduleConstraint();
-
-    return single_instance;
   }
 }

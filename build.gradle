@@ -23,8 +23,8 @@ mainClassName = 'org.rplsd.autocg.App'
 generateGrammarSource {
     outputs.cacheIf { true }
     maxHeapSize = "64m"
-    arguments += ["-listener", "-package", "org.rplsd.autocg.Parser", "-Xexact-output-dir"]
-    outputDirectory = new File("src/main/java/org/rplsd/autocg/Parser".toString())
+    arguments += ["-listener", "-package", "org.rplsd.autocg.parser", "-Xexact-output-dir"]
+    outputDirectory = new File("src/main/java/org/rplsd/autocg/parser".toString())
 }
 
 compileJava.dependsOn generateGrammarSource

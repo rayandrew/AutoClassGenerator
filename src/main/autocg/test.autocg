@@ -1,17 +1,56 @@
-CREATE CLASSROOM 7602 (
+/**
+  Creating CLASSROOM
+  Name: 7602
+  Facilities :
+  - Capacity : 1000
+  - AC : 3
+  - BLA : 3
+*/
+CLASSROOM 7601 (
+  CAPACITY 10,
+  AC 3,
+  BLA 3
+);
+
+CLASSROOM 7602 (
+  CAPACITY 100,
+  AC 3,
+  BLA 3
+);
+
+CLASSROOM 7603 (
   CAPACITY 1000,
   AC 3,
   BLA 3
 );
 
-CREATE COURSE IF4070 (
-  DURATION 30,
-  CAPACITY 30,
-  AC 4,
-  BLA 5
+/**
+  Creating COURSE
+  Name: IF4070
+  DURATION: 3 hours
+  Facilities :
+  - Capacity : 30
+  - AC : 3
+  - BLA : 5
+*/
+COURSE IF4070 (
+  DURATION 3,
+  CAPACITY 5,
+  AC 3,
+  BLA 3
 );
 
-CREATE LECTURER IMAM (
+/**
+  Creating LECTURER
+  Name: IMAM
+  Available:
+  - Monday : 12 - 14, 16 - 18
+  - Tuesday : 12 - 14, 16 - 18
+  - Wednesday : 17 - 18
+  - Thursday : 17 - 18
+  - Friday : 17 - 18
+*/
+LECTURER IMAM (
   MONDAY (12-14, 16-18),
   TUESDAY (12-14, 16-18),
   WEDNESDAY (17-18),

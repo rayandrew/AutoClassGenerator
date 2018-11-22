@@ -1,7 +1,7 @@
-package org.rplsd.autocg.Listeners;
+package org.rplsd.autocg.listeners;
 
-import org.rplsd.autocg.Parser.*;
-import org.rplsd.autocg.Parser.AutoCGParser.Stmt_listContext;
+import org.rplsd.autocg.parser.AutoCGBaseListener;
+import org.rplsd.autocg.parser.AutoCGParser.Stmt_listContext;
 
 public class StatementListListener extends AutoCGBaseListener {
   @Override

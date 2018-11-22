@@ -2,15 +2,11 @@ package org.rplsd.autocg;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-// import org.antlr.v4.runtime.tree.ParseTree;
-// import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import org.rplsd.autocg.Parser.*;
-import org.rplsd.autocg.Listeners.AutoCGListenerImplementation;
-
-// import java.util.HashMap;
-// import java.util.List;
-// import java.util.ArrayList;
+import org.rplsd.autocg.parser.*;
+import org.rplsd.autocg.scheduler.*;
+import org.rplsd.autocg.listeners.AutoCGListenerImplementation;
+import org.rplsd.autocg.scheduler.constraints.*;
 
 public class App {
   public static void main(String[] args) {
@@ -43,10 +39,23 @@ public class App {
       AutoCGParser parser = new AutoCGParser(new CommonTokenStream(lexer));
       AutoCGListenerImplementation listener = new AutoCGListenerImplementation();
       parser.parse().enterRule(listener);
-      // Classrooms classrooms = Classrooms.getInstance();
-      // System.out.println(classrooms.getClassroomByName("7602").getFacilities().toString());
-      // Courses courses = Courses.getInstance();
-      // System.out.println(courses.getCourseByName("IF4070").getDuration());
+
+      Classrooms classrooms = Classrooms.getInstance();
+      System.out.println(classrooms.getClassroomByName("7602").getFacilities().toString());
+
+      Courses courses = Courses.getInstance();
+      System.out.println(courses.getCourseByName("IF4070").getRequirements().toString());
+
+      Lecturers lecturers = Lecturers.getInstance();
+      System.out.println(lecturers.getLecturerByName("IMAM").getName());
+
+      Schedules schedules = Schedules.getInstance();
+      schedules.registerConstraint(new MaxLecturerHour(2));
+      schedules.registerConstraint(new RestrictedTime());
+
+      System.out.println(schedules.suitableClassroomsForCourse(courses.getCourseByName("IF4070")).size());
+      System.out.println(schedules.isLecturerAvailable("MONDAY", 10));
+      schedules.generateSchedule(0, 0);
     } catch (Exception e) {
       if (e.getMessage() != null) {
         System.err.println(e.getMessage());

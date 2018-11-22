@@ -14,18 +14,22 @@ stmt:
 	| create_course_stmt
 	| create_lecture_stmt;
 
+constraint_name: CONS_MAX_LECTURER_HOUR | CONS_RESTRICTED;
+
+create_constraint_stmt: K_CONSTRAINT constraint_name ();
+
 create_class_room_stmt:
-	K_CREATE K_CLASSROOM (K_IF K_NOT K_EXISTS)? class_room_name (
+	K_CLASSROOM class_room_name (
 		OPEN_PAR config_def (COMMA config_def)* CLOSE_PAR
 	);
 
 create_course_stmt:
-	K_CREATE K_COURSE (K_IF K_NOT K_EXISTS)? course_name (
+	K_COURSE course_name (
 		OPEN_PAR config_def (COMMA config_def)* CLOSE_PAR
 	);
 
 create_lecture_stmt:
-	K_CREATE K_LECTURER (K_IF K_NOT K_EXISTS)? lecture_name (
+	K_LECTURER lecture_name (
 		OPEN_PAR lecture_def (COMMA lecture_def)* CLOSE_PAR
 	);
 
@@ -58,29 +62,10 @@ day_name:
 	| D_FRIDAY;
 
 SCOL: ';';
-DOT: '.';
 OPEN_PAR: '(';
 CLOSE_PAR: ')';
 COMMA: ',';
-ASSIGN: '=';
-STAR: '*';
-PLUS: '+';
 MINUS: '-';
-TILDE: '~';
-PIPE2: '||';
-DIV: '/';
-MOD: '%';
-LT2: '<<';
-GT2: '>>';
-AMP: '&';
-PIPE: '|';
-LT: '<';
-LT_EQ: '<=';
-GT: '>';
-GT_EQ: '>=';
-EQ: '==';
-NOT_EQ1: '!=';
-NOT_EQ2: '<>';
 
 D_MONDAY: M O N D A Y;
 D_TUESDAY: T U E S D A Y;
@@ -88,14 +73,13 @@ D_WEDNESDAY: W E D N E S D A Y;
 D_THURSDAY: T H U R S D A Y;
 D_FRIDAY: F R I D A Y;
 
-K_CREATE: C R E A T E;
+CONS_RESTRICTED: R E S T R I C T E D;
+CONS_MAX_LECTURER_HOUR: L E C T U R E R SPACES H O U R;
+
+K_CONSTRAINT: C O N S T R A I N T;
 K_COURSE: C O U R S E;
 K_CLASSROOM: C L A S S R O O M;
-K_EXISTS: E X I S T S;
-K_IF: I F;
 K_LECTURER: L E C T U R E R;
-K_NOT: N O T;
-K_WITHOUT: W I T H O U T;
 
 IDENTIFIER:
 	'"' (~'"' | '""')* '"'
@@ -107,11 +91,7 @@ NUMERIC_LITERAL:
 	DIGIT+ ('.' DIGIT*)? (E [-+]? DIGIT+)?
 	| '.' DIGIT+ ( E [-+]? DIGIT+)?;
 
-BIND_PARAMETER: '?' DIGIT* | [:@$] IDENTIFIER;
-
 STRING_LITERAL: '\'' ( ~'\'' | '\'\'')* '\'';
-
-BLOB_LITERAL: X STRING_LITERAL;
 
 SINGLE_LINE_COMMENT: '--' ~[\r\n]* -> channel(HIDDEN);
 

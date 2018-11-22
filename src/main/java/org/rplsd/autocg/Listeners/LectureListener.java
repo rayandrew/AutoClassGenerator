@@ -1,11 +1,11 @@
-package org.rplsd.autocg.Listeners;
+package org.rplsd.autocg.listeners;
 
 import java.util.ArrayList;
 
-import org.rplsd.autocg.Constant;
-import org.rplsd.autocg.Lecturers;
-import org.rplsd.autocg.Parser.*;
-import org.rplsd.autocg.Parser.AutoCGParser.Create_lecture_stmtContext;
+import org.rplsd.autocg.scheduler.Constant;
+import org.rplsd.autocg.scheduler.Lecturers;
+import org.rplsd.autocg.parser.AutoCGBaseListener;
+import org.rplsd.autocg.parser.AutoCGParser.Create_lecture_stmtContext;
 
 public class LectureListener extends AutoCGBaseListener {
   @Override

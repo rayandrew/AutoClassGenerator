@@ -1,11 +1,11 @@
-package org.rplsd.autocg;
+package org.rplsd.autocg.scheduler;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Lecturers {
   private static Lecturers single_instance = null;
-  private List<Lecturer> lecturers = new ArrayList<>();
+  private HashMap<String, Lecturer> lecturers = new HashMap<>();
 
   public static Lecturers getInstance() {
     if (single_instance == null)
@@ -14,25 +14,35 @@ public class Lecturers {
     return single_instance;
   }
 
-  public List<Lecturer> getLecturers() {
+  public HashMap<String, Lecturer> getLecturers() {
     return lecturers;
   }
 
+  public Lecturer getLecturerByName(String name) {
+    return lecturers.get(name);
+  }
+
   public ArrayList<ArrayList<Boolean>> getLecturerAvailabilityByName(String name) {
-    for (Lecturer lecturer : lecturers) {
-      if(lecturer.getName().equals(name)) {
-        return lecturer.getAvailability();
-      }
-    }
-    return null;
+    return lecturers.get(name).getAvailability();
   }
 
   public void addLecturer(String name) {
-    lecturers.add(new Lecturer(name));
+    lecturers.put(name, new Lecturer(name));
   }
 
   public void addLecturer(String name, ArrayList<ArrayList<Boolean>> availability) {
-    lecturers.add(new Lecturer(name, availability));
+    lecturers.put(name, new Lecturer(name, availability));
+  }
+
+  public boolean isAvailableAt(String day, int time) {
+    for (HashMap.Entry<String, Lecturer> lecturer : lecturers.entrySet()) {
+      if (lecturer.getValue().getAvailability().get(Constant.WEEKDAYS.get(day.toUpperCase()))
+          .get(time - Constant.DAY_START)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public class Lecturer {

@@ -1,4 +1,4 @@
-package org.rplsd.autocg;
+package org.rplsd.autocg.scheduler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Courses {
   private static Courses single_instance = null;
-  private List<Course> courses = new ArrayList<>();
+  private ArrayList<Course> courses = new ArrayList<>();
 
   public static Courses getInstance() {
     if (single_instance == null)
@@ -15,16 +15,17 @@ public class Courses {
     return single_instance;
   }
 
-  public List<Course> getCourses() {
+  public ArrayList<Course> getCourses() {
     return courses;
   }
 
-  public void addCourse(String courseName, HashMap<String, Integer> facilities, int duration) {
-    courses.add(new Course(courseName, facilities, duration));
+  public void addCourse(String courseName, HashMap<String, Integer> requirements, int duration) {
+    courses.add(new Course(courseName, requirements, duration));
   }
 
-  public void addCourse(String courseName, HashMap<String, Integer> facilities, int duration, List<String> lecturers) {
-    courses.add(new Course(courseName, facilities, duration, lecturers));
+  public void addCourse(String courseName, HashMap<String, Integer> requirements, int duration,
+      List<String> lecturers) {
+    courses.add(new Course(courseName, requirements, duration, lecturers));
   }
 
   public Course getCourseByName(String name) {
@@ -39,20 +40,20 @@ public class Courses {
 
   public class Course {
     private String courseName;
-    private HashMap<String, Integer> facilities;
+    private HashMap<String, Integer> requirements;
     private int duration;
     private List<String> lecturers;
 
-    public Course(String courseName, HashMap<String, Integer> facilities, int duration) {
+    public Course(String courseName, HashMap<String, Integer> requirements, int duration) {
       this.courseName = courseName;
-      this.facilities = facilities;
+      this.requirements = requirements;
       this.duration = duration;
       this.lecturers = new ArrayList<>();
     }
 
-    public Course(String courseName, HashMap<String, Integer> facilities, int duration, List<String> lecturers) {
+    public Course(String courseName, HashMap<String, Integer> requirements, int duration, List<String> lecturers) {
       this.courseName = courseName;
-      this.facilities = facilities;
+      this.requirements = requirements;
       this.duration = duration;
       this.lecturers = lecturers;
     }
@@ -65,12 +66,12 @@ public class Courses {
       this.courseName = courseName;
     }
 
-    public HashMap<String, Integer> getFacilities() {
-      return facilities;
+    public HashMap<String, Integer> getRequirements() {
+      return requirements;
     }
 
-    public void setFacilities(HashMap<String, Integer> facilities) {
-      this.facilities = facilities;
+    public void setRequirements(HashMap<String, Integer> requirements) {
+      this.requirements = requirements;
     }
 
     public int getDuration() {

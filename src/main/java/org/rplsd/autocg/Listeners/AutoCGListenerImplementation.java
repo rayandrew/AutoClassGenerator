@@ -1,7 +1,7 @@
-package org.rplsd.autocg.Listeners;
+package org.rplsd.autocg.listeners;
 
-import org.rplsd.autocg.Parser.*;
-import org.rplsd.autocg.Parser.AutoCGParser.ParseContext;
+import org.rplsd.autocg.parser.AutoCGBaseListener;
+import org.rplsd.autocg.parser.AutoCGParser.ParseContext;
 
 public class AutoCGListenerImplementation extends AutoCGBaseListener {
   @Override

@@ -1,4 +1,4 @@
-package org.rplsd.autocg;
+package org.rplsd.autocg.scheduler;
 
 import java.util.HashMap;
 

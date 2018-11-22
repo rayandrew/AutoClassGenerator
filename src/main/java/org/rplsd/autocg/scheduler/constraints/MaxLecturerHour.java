@@ -1,5 +1,7 @@
 package org.rplsd.autocg.scheduler.constraints;
 
+import java.util.ArrayList;
+
 import org.rplsd.autocg.scheduler.Schedules;
 import org.rplsd.autocg.scheduler.interfaces.Constraint;
 
@@ -26,6 +28,20 @@ public class MaxLecturerHour implements Constraint {
 
   @Override
   public boolean isPassed(Schedules schedules, int day, int time) {
+    int count = 0;
+
+    for (ArrayList<Schedules.Schedule> schedule : schedules.getSchedules()) {
+      for (Schedules.Schedule sched : schedule) {
+        if (sched != null) {
+          if (schedules.getLecturers().getLecturers().contains(sched.getLecturer())) {
+            count++;
+            if (count >= getMaxLecturerHour())
+              return false;
+          }
+        }
+      }
+    }
+
     return true;
   }
 }

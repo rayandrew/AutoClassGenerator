@@ -3,7 +3,7 @@ package org.rplsd.autocg.scheduler.constraints;
 import java.util.HashMap;
 import java.util.List;
 
-import org.rplsd.autocg.Util.Pair;
+import org.rplsd.autocg.util.Pair;
 import org.rplsd.autocg.scheduler.Schedules;
 import org.rplsd.autocg.scheduler.interfaces.Constraint;
 

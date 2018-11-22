@@ -5,7 +5,8 @@ import java.util.HashMap;
 
 public class Lecturers {
   private static Lecturers single_instance = null;
-  private HashMap<String, Lecturer> lecturers = new HashMap<>();
+  private ArrayList<Lecturer> lecturers = new ArrayList<>();
+  private HashMap<String, ArrayList<ArrayList<Boolean>>> availability = new HashMap<>();
 
   public static Lecturers getInstance() {
     if (single_instance == null)
@@ -14,49 +15,59 @@ public class Lecturers {
     return single_instance;
   }
 
-  public HashMap<String, Lecturer> getLecturers() {
+  public ArrayList<Lecturer> getLecturers() {
     return lecturers;
   }
 
-  public Lecturer getLecturerByName(String name) {
-    return lecturers.get(name);
-  }
-
-  public ArrayList<ArrayList<Boolean>> getLecturerAvailabilityByName(String name) {
-    return lecturers.get(name).getAvailability();
-  }
-
   public void addLecturer(String name) {
-    lecturers.put(name, new Lecturer(name));
+    lecturers.add(new Lecturer(name));
   }
 
   public void addLecturer(String name, ArrayList<ArrayList<Boolean>> availability) {
-    lecturers.put(name, new Lecturer(name, availability));
+    lecturers.add(new Lecturer(name, availability));
   }
 
-  public boolean isAvailableAt(String day, int time) {
-    for (HashMap.Entry<String, Lecturer> lecturer : lecturers.entrySet()) {
-      if (lecturer.getValue().getAvailability().get(Constant.WEEKDAYS.get(day.toUpperCase()))
-          .get(time - Constant.DAY_START)) {
-        return true;
+  public Lecturer getLecturerByName(String name) {
+    for (Lecturer lecturer : lecturers) {
+      if (lecturer.getName().equals(name)) {
+        return lecturer;
       }
     }
 
-    return false;
+    return null;
+  }
+
+  public ArrayList<ArrayList<Boolean>> getLecturerAvailabilityByName(String name) {
+    Lecturer lecturer = getLecturerByName(name);
+
+    if (lecturer != null)
+      return lecturer.getAvailability();
+
+    return null;
+  }
+
+  public Lecturer getFirstAvailableLecturer(int day, int time) {
+    for (Lecturer lecturer : lecturers) {
+      if (lecturer.getAvailability().get(day).get(time)) {
+        return lecturer;
+      }
+    }
+
+    return null;
   }
 
   public class Lecturer {
     private String name;
-    private ArrayList<ArrayList<Boolean>> availability;
+    private transient ArrayList<ArrayList<Boolean>> availability;
 
     public Lecturer(String name) {
       this.name = name;
-      ArrayList<ArrayList<Boolean>> temp = new ArrayList<ArrayList<Boolean>>(Constant.WEEKDAYS.size());
+      ArrayList<ArrayList<Boolean>> temp = new ArrayList<ArrayList<Boolean>>(Constants.WEEKDAYS.size());
 
-      for (int i = 0; i < Constant.WEEKDAYS.size(); i++) {
-        ArrayList<Boolean> _temp = new ArrayList<>(Constant.DAY_END - Constant.DAY_START);
+      for (int i = 0; i < Constants.WEEKDAYS.size(); i++) {
+        ArrayList<Boolean> _temp = new ArrayList<>(Constants.DAY_END - Constants.DAY_START);
 
-        for (int j = 0; j <= Constant.DAY_END - Constant.DAY_START; j++) {
+        for (int j = 0; j < Constants.DAY_END - Constants.DAY_START; j++) {
           _temp.add(false);
         }
 

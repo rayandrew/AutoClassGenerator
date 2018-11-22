@@ -2,7 +2,7 @@ package org.rplsd.autocg.scheduler;
 
 import java.util.HashMap;
 
-public class Constant {
+public class Constants {
   public static final HashMap<String, Integer> WEEKDAYS;
   public static final int DAY_START = 7;
   public static final int DAY_END = 18;

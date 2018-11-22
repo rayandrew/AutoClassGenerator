@@ -42,8 +42,8 @@ course_name: any_name;
 configuration_name: any_name;
 config_name: any_name;
 lecture_name: any_name;
-
 value_name: any_name;
+
 value_lecture:
 	| NUMERIC_LITERAL MINUS NUMERIC_LITERAL
 	| OPEN_PAR value_lecture CLOSE_PAR;

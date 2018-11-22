@@ -1,6 +1,6 @@
 package org.rplsd.autocg.scheduler;
 
-import org.rplsd.autocg.Util.Pair;
+import org.rplsd.autocg.util.Pair;
 
 import java.util.HashSet;
 import java.util.Set;

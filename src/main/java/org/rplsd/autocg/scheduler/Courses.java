@@ -2,7 +2,6 @@ package org.rplsd.autocg.scheduler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Courses {
   private static Courses single_instance = null;
@@ -23,11 +22,6 @@ public class Courses {
     courses.add(new Course(courseName, requirements, duration));
   }
 
-  public void addCourse(String courseName, HashMap<String, Integer> requirements, int duration,
-      List<String> lecturers) {
-    courses.add(new Course(courseName, requirements, duration, lecturers));
-  }
-
   public Course getCourseByName(String name) {
     for (Course course : courses) {
       if (course.getCourseName().equals(name)) {
@@ -42,20 +36,11 @@ public class Courses {
     private String courseName;
     private HashMap<String, Integer> requirements;
     private int duration;
-    private List<String> lecturers;
 
     public Course(String courseName, HashMap<String, Integer> requirements, int duration) {
       this.courseName = courseName;
       this.requirements = requirements;
       this.duration = duration;
-      this.lecturers = new ArrayList<>();
-    }
-
-    public Course(String courseName, HashMap<String, Integer> requirements, int duration, List<String> lecturers) {
-      this.courseName = courseName;
-      this.requirements = requirements;
-      this.duration = duration;
-      this.lecturers = lecturers;
     }
 
     public String getCourseName() {
@@ -80,14 +65,6 @@ public class Courses {
 
     public void setDuration(int duration) {
       this.duration = duration;
-    }
-
-    public List<String> getLecturers() {
-      return lecturers;
-    }
-
-    public void setLecturers(List<String> lecturers) {
-      this.lecturers = lecturers;
     }
   }
 }

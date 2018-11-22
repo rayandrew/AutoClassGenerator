@@ -4,7 +4,7 @@
  * All credits go to @kkeidal
  */
 
-package org.rplsd.autocg.Util;
+package org.rplsd.autocg.util;
 
 /**
  * Creates a pair of two objects

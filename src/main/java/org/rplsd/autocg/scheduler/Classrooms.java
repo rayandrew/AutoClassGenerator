@@ -127,17 +127,17 @@ public class Classrooms {
   public class Classroom {
     private String name;
     private HashMap<String, Integer> facilities;
-    private ArrayList<ArrayList<Boolean>> availability;
+    private transient ArrayList<ArrayList<Boolean>> availability;
 
     public Classroom(String name, HashMap<String, Integer> facilities) {
       this.name = name;
       this.facilities = facilities;
-      ArrayList<ArrayList<Boolean>> temp = new ArrayList<ArrayList<Boolean>>(Constant.WEEKDAYS.size());
+      ArrayList<ArrayList<Boolean>> temp = new ArrayList<ArrayList<Boolean>>(Constants.WEEKDAYS.size());
 
-      for (int i = 0; i < Constant.WEEKDAYS.size(); i++) {
-        ArrayList<Boolean> _temp = new ArrayList<>(Constant.DAY_END - Constant.DAY_START);
+      for (int i = 0; i < Constants.WEEKDAYS.size(); i++) {
+        ArrayList<Boolean> _temp = new ArrayList<>(Constants.DAY_END - Constants.DAY_START);
 
-        for (int j = 0; j <= Constant.DAY_END - Constant.DAY_START; j++) {
+        for (int j = 0; j < Constants.DAY_END - Constants.DAY_START; j++) {
           _temp.add(true);
         }
 

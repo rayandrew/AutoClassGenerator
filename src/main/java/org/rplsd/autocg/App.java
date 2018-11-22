@@ -1,5 +1,7 @@
 package org.rplsd.autocg;
 
+import java.util.ArrayList;
+
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -40,22 +42,27 @@ public class App {
       AutoCGListenerImplementation listener = new AutoCGListenerImplementation();
       parser.parse().enterRule(listener);
 
-      Classrooms classrooms = Classrooms.getInstance();
-      System.out.println(classrooms.getClassroomByName("7602").getFacilities().toString());
+      // Classrooms classrooms = Classrooms.getInstance();
+      // System.out.println(classrooms.getClassroomByName("7602").getFacilities().toString());
 
-      Courses courses = Courses.getInstance();
-      System.out.println(courses.getCourseByName("IF4070").getRequirements().toString());
+      // Courses courses = Courses.getInstance();
+      // System.out.println(courses.getCourseByName("IF4070").getRequirements().toString());
 
-      Lecturers lecturers = Lecturers.getInstance();
-      System.out.println(lecturers.getLecturerByName("IMAM").getName());
+      // Lecturers lecturers = Lecturers.getInstance();
+      // System.out.println(lecturers.getLecturerByName("IMAM").getName());
 
       Schedules schedules = Schedules.getInstance();
-      schedules.registerConstraint(new MaxLecturerHour(2));
+      schedules.registerConstraint(new MaxLecturerHour(10));
       schedules.registerConstraint(new RestrictedTime());
 
-      System.out.println(schedules.suitableClassroomsForCourse(courses.getCourseByName("IF4070")).size());
-      System.out.println(schedules.isLecturerAvailable("MONDAY", 10));
-      schedules.generateSchedule(0, 0);
+      // System.out.println(schedules.suitableClassroomsForCourse(courses.getCourseByName("IF4070")).size());
+      // System.out.println(schedules.isLecturerAvailable("MONDAY", 10));
+      boolean status = schedules.generateSchedule(0, 0);
+      System.out.println("\nRESULTTTTT");
+      for (ArrayList<Schedules.Schedule> schedule : schedules.getSchedules()) {
+        System.out.println(schedule.toString());
+      }
+      System.out.println(status);
     } catch (Exception e) {
       if (e.getMessage() != null) {
         System.err.println(e.getMessage());

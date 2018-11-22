@@ -1,6 +1,8 @@
 package org.rplsd.autocg.scheduler;
 
-import java.util.HashMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 
 import org.rplsd.autocg.scheduler.interfaces.Constraint;
@@ -9,9 +11,9 @@ import java.util.ArrayList;
 
 public class Schedules {
   private static Schedules single_instance = null;
-  private Classrooms classrooms = Classrooms.getInstance();
-  private Lecturers lecturers = Lecturers.getInstance();
-  private Courses courses = Courses.getInstance();
+  private transient Classrooms classrooms = Classrooms.getInstance();
+  private transient Lecturers lecturers = Lecturers.getInstance();
+  private transient Courses courses = Courses.getInstance();
   private List<Constraint> constraints = new ArrayList<>();
 
   private ArrayList<ArrayList<Schedule>> schedules;
@@ -21,6 +23,34 @@ public class Schedules {
       single_instance = new Schedules();
 
     return single_instance;
+  }
+
+  /**
+   * @return the classrooms
+   */
+  public Classrooms getClassrooms() {
+    return classrooms;
+  }
+
+  /**
+   * @return the courses
+   */
+  public Courses getCourses() {
+    return courses;
+  }
+
+  /**
+   * @return the constraints
+   */
+  public List<Constraint> getConstraints() {
+    return constraints;
+  }
+
+  /**
+   * @return the lecturers
+   */
+  public Lecturers getLecturers() {
+    return lecturers;
   }
 
   public void registerConstraint(Constraint constraint) {
@@ -41,10 +71,10 @@ public class Schedules {
   }
 
   private Schedules() {
-    ArrayList<ArrayList<Schedule>> temp = new ArrayList<ArrayList<Schedule>>(Constant.WEEKDAYS.size());
-    for (int i = 0; i < Constant.WEEKDAYS.size(); i++) {
-      ArrayList<Schedule> _temp = new ArrayList<>(Constant.DAY_END - Constant.DAY_START);
-      for (int j = 0; j < Constant.DAY_END - Constant.DAY_START; j++) {
+    ArrayList<ArrayList<Schedule>> temp = new ArrayList<>(Constants.WEEKDAYS.size());
+    for (int i = 0; i < Constants.WEEKDAYS.size(); i++) {
+      ArrayList<Schedule> _temp = new ArrayList<>(Constants.DAY_END - Constants.DAY_START);
+      for (int j = 0; j < Constants.DAY_END - Constants.DAY_START; j++) {
         _temp.add(null);
       }
       temp.add(_temp);
@@ -60,32 +90,58 @@ public class Schedules {
     return classrooms.suitableClassroomsForCourse(course);
   }
 
-  public boolean isLecturerAvailable(String day, int time) {
-    return lecturers.isAvailableAt(day, time);
-  }
-
   private boolean checkReqsAndConstraints(Classrooms.Classroom classroom, int day, int time) {
     return classroom.getAvailability().get(day).get(time) && checkConstraints(day, time);
   }
 
   public boolean generateSchedule(int courseIndex, int currentHour) {
-    if (courseIndex > courses.getCourses().size())
+    if (courseIndex >= courses.getCourses().size())
       return true;
 
     Courses.Course course = courses.getCourses().get(courseIndex);
     List<Classrooms.Classroom> suitableClassroomsForCourse = suitableClassroomsForCourse(course);
 
+    System.out.println(courseIndex + " " + currentHour + " " + suitableClassroomsForCourse.size());
+
     for (Classrooms.Classroom suitableClassroom : suitableClassroomsForCourse) {
-      for (int day = 0; day < Constant.WEEKDAYS.size(); day++) {
-        for (int time = 0; time <= Constant.DAY_END - Constant.DAY_START; time++) {
+      System.out.println(suitableClassroom.getName());
+      for (int day = 0; day < Constants.WEEKDAYS.size(); day++) {
+        for (int time = 0; time < Constants.DAY_END - Constants.DAY_START; time++) {
           if (checkReqsAndConstraints(suitableClassroom, day, time)) {
-            // System.out.println("Class " + suitableClassroom.getName());
+            Lecturers.Lecturer lecturer = lecturers.getFirstAvailableLecturer(day, time);
+
+            if (lecturer != null) {
+              Schedule schedule = new Schedule(suitableClassroom, lecturer, course);
+              lecturer.getAvailability().get(day).set(time, false);
+              schedules.get(day).set(time, schedule);
+              suitableClassroom.getAvailability().get(day).set(time, false);
+
+              for (ArrayList<Boolean> cek : lecturer.getAvailability()) {
+                System.out.println(cek.toString());
+              }
+
+              int nextHour = currentHour < course.getDuration() - 1 ? currentHour + 1 : 0;
+              int nextClassRequirementIndex = nextHour == 0 ? courseIndex + 1 : courseIndex;
+
+              if (generateSchedule(nextClassRequirementIndex, nextHour))
+                return true;
+
+              schedules.get(day).set(time, null);
+              suitableClassroom.getAvailability().get(day).set(time, true);
+              lecturer.getAvailability().get(day).set(time, true);
+            }
           }
         }
       }
     }
 
     return false;
+  }
+
+  @Override
+  public String toString() {
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    return gson.toJson(this);
   }
 
   public class Schedule {
@@ -97,6 +153,39 @@ public class Schedules {
       this.classroom = classroom;
       this.lecturer = lecturer;
       this.course = course;
+    }
+
+    public Classrooms.Classroom getClassroom() {
+      return classroom;
+    }
+
+    public void setClassroom(Classrooms.Classroom classroom) {
+      this.classroom = classroom;
+    }
+
+    public Lecturers.Lecturer getLecturer() {
+      return lecturer;
+    }
+
+    public void setLecturer(Lecturers.Lecturer lecturer) {
+      this.lecturer = lecturer;
+    }
+
+    public Courses.Course getCourse() {
+      return course;
+    }
+
+    public void setCourse(Courses.Course course) {
+      this.course = course;
+    }
+
+    @Override
+    public String toString() {
+      if (classroom == null && lecturer == null && course == null) {
+        return "Empty";
+      }
+
+      return "[Classroom " + classroom.getName() + "][" + course.getCourseName() + "] by " + lecturer.getName();
     }
   }
 }

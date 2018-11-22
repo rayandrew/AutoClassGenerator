@@ -13,7 +13,8 @@ public class MaxLecturerHourListener extends AutoCGBaseListener {
    */
   @Override
   public void enterMax_hour_def(Max_hour_defContext ctx) {
-    System.out.println(ctx.max_hour_value().children.get(0).toString());
+    Integer maxHour = Integer.parseInt(ctx.max_hour_value().children.get(0).toString());
+    // INSERT DATA TO CLASS
   }
 
   /**

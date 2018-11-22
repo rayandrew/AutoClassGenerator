@@ -8,7 +8,7 @@ import org.rplsd.autocg.scheduler.Schedules;
 import org.rplsd.autocg.scheduler.interfaces.Constraint;
 
 public class RestrictedTime implements Constraint {
-  private HashMap<String, List<Pair<Integer, Integer>>> lecturerPreferredTime = new HashMap<>();
+  private HashMap<String, List<Pair<Integer, Integer>>> restrictedTime = new HashMap<>();
 
   @Override
   public boolean isPassed(Schedules schedules, int day, int time) {

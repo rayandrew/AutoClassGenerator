@@ -101,10 +101,11 @@ public class Schedules {
     Courses.Course course = courses.getCourses().get(courseIndex);
     List<Classrooms.Classroom> suitableClassroomsForCourse = suitableClassroomsForCourse(course);
 
-    System.out.println(courseIndex + " " + currentHour + " " + suitableClassroomsForCourse.size());
+    // System.out.println(courseIndex + " " + currentHour + " " +
+    // suitableClassroomsForCourse.size());
 
     for (Classrooms.Classroom suitableClassroom : suitableClassroomsForCourse) {
-      System.out.println(suitableClassroom.getName());
+      // System.out.println(suitableClassroom.getName());
       for (int day = 0; day < Constants.WEEKDAYS.size(); day++) {
         for (int time = 0; time < Constants.DAY_END - Constants.DAY_START; time++) {
           if (checkReqsAndConstraints(suitableClassroom, day, time)) {
@@ -116,9 +117,9 @@ public class Schedules {
               schedules.get(day).set(time, schedule);
               suitableClassroom.getAvailability().get(day).set(time, false);
 
-              for (ArrayList<Boolean> cek : lecturer.getAvailability()) {
-                System.out.println(cek.toString());
-              }
+              // for (ArrayList<Boolean> cek : lecturer.getAvailability()) {
+              // System.out.println(cek.toString());
+              // }
 
               int nextHour = currentHour < course.getDuration() - 1 ? currentHour + 1 : 0;
               int nextClassRequirementIndex = nextHour == 0 ? courseIndex + 1 : courseIndex;

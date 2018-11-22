@@ -8,6 +8,13 @@ import org.rplsd.autocg.parser.AutoCGBaseListener;
 import org.rplsd.autocg.parser.AutoCGParser.Create_lecture_stmtContext;
 
 public class LectureListener extends AutoCGBaseListener {
+  /**
+   * {@inheritDoc}
+   *
+   * <p>
+   * The default implementation does nothing.
+   * </p>
+   */
   @Override
   public void enterCreate_lecture_stmt(Create_lecture_stmtContext ctx) {
     Lecturers lecturers = Lecturers.getInstance();
@@ -24,8 +31,6 @@ public class LectureListener extends AutoCGBaseListener {
       temp.add(_temp);
     }
 
-    System.out.println(ctx.lecture_def().size());
-
     for (int i = 0; i < ctx.lecture_def().size(); i++) {
       for (int j = 0; j < ctx.lecture_def(i).value_lecture().size(); j++) {
         Integer start = Integer.parseInt(ctx.lecture_def(i).value_lecture(j).children.get(0).toString())
@@ -40,15 +45,22 @@ public class LectureListener extends AutoCGBaseListener {
       }
     }
 
-    System.out.println(ctx.lecture_name().any_name().children.get(0).toString());
+    // System.out.println(ctx.lecture_name().any_name().children.get(0).toString());
 
-    for (ArrayList<Boolean> cek : temp) {
-      System.out.println(cek.toString());
-    }
+    // for (ArrayList<Boolean> cek : temp) {
+    // System.out.println(cek.toString());
+    // }
 
     lecturers.addLecturer(ctx.lecture_name().any_name().children.get(0).toString(), temp);
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * <p>
+   * The default implementation does nothing.
+   * </p>
+   */
   @Override
   public void exitCreate_lecture_stmt(Create_lecture_stmtContext ctx) {
 

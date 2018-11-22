@@ -7,6 +7,13 @@ import org.rplsd.autocg.parser.AutoCGBaseListener;
 import org.rplsd.autocg.parser.AutoCGParser.Create_course_stmtContext;
 
 public class CourseListener extends AutoCGBaseListener {
+  /**
+   * {@inheritDoc}
+   *
+   * <p>
+   * The default implementation does nothing.
+   * </p>
+   */
   @Override
   public void enterCreate_course_stmt(Create_course_stmtContext ctx) {
     Courses courses = Courses.getInstance();
@@ -27,6 +34,13 @@ public class CourseListener extends AutoCGBaseListener {
     courses.addCourse(name, requirements, duration);
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * <p>
+   * The default implementation does nothing.
+   * </p>
+   */
   @Override
   public void exitCreate_course_stmt(Create_course_stmtContext ctx) {
 

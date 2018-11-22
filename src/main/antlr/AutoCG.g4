@@ -12,11 +12,10 @@ stmt_list: SCOL* stmt ( SCOL+ stmt)* SCOL*;
 stmt:
 	create_class_room_stmt
 	| create_course_stmt
-	| create_lecture_stmt;
+	| create_lecture_stmt
+	| create_constraint_stmt;
 
 constraint_name: CONS_MAX_LECTURER_HOUR | CONS_RESTRICTED;
-
-create_constraint_stmt: K_CONSTRAINT constraint_name ();
 
 create_class_room_stmt:
 	K_CLASSROOM class_room_name (
@@ -33,7 +32,25 @@ create_lecture_stmt:
 		OPEN_PAR lecture_def (COMMA lecture_def)* CLOSE_PAR
 	);
 
+create_constraint_stmt:
+	K_CONSTRAINT (
+		OPEN_PAR max_hour_def? COMMA restricted_def? CLOSE_PAR
+	);
+
+// constraint_def: max_hour_def | restricted_def
+
+max_hour_def: max_hour max_hour_value;
+
+restricted_def:
+	CONS_RESTRICTED OPEN_PAR restricted_val_def (
+		COMMA restricted_val_def
+	)* CLOSE_PAR;
+
+restricted_val_def:
+	day_name OPEN_PAR value_restricted (COMMA value_restricted)* CLOSE_PAR;
+
 config_def: config_name value_name;
+
 lecture_def:
 	day_name OPEN_PAR value_lecture (COMMA value_lecture)* CLOSE_PAR;
 
@@ -43,10 +60,16 @@ configuration_name: any_name;
 config_name: any_name;
 lecture_name: any_name;
 value_name: any_name;
+max_hour: CONS_MAX_LECTURER_HOUR;
+max_hour_value: NUMERIC_LITERAL;
 
 value_lecture:
 	| NUMERIC_LITERAL MINUS NUMERIC_LITERAL
 	| OPEN_PAR value_lecture CLOSE_PAR;
+
+value_restricted:
+	| NUMERIC_LITERAL MINUS NUMERIC_LITERAL
+	| OPEN_PAR value_restricted CLOSE_PAR;
 
 any_name:
 	IDENTIFIER
@@ -74,7 +97,8 @@ D_THURSDAY: T H U R S D A Y;
 D_FRIDAY: F R I D A Y;
 
 CONS_RESTRICTED: R E S T R I C T E D;
-CONS_MAX_LECTURER_HOUR: L E C T U R E R SPACES H O U R;
+CONS_MAX_LECTURER_HOUR:
+	M A X SPACES L E C T U R E R SPACES H O U R;
 
 K_CONSTRAINT: C O N S T R A I N T;
 K_COURSE: C O U R S E;

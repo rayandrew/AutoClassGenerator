@@ -50,7 +50,7 @@ public class RestrictedTimeListener extends AutoCGBaseListener {
     }
 
     // for (ArrayList<Boolean> tests : restricted) {
-    // System.out.println(tests.toString());
+    //   System.out.println(tests.toString());
     // }
 
     constraints.addConstraint(new RestrictedTime(restricted));
@@ -65,15 +65,7 @@ public class RestrictedTimeListener extends AutoCGBaseListener {
 
     @Override
     public boolean isPassed(Schedules schedules, int day, int time) {
-      for (int i = 0; i < Constants.WEEKDAYS.size(); i++) {
-        for (int j = 0; j < Constants.DAY_END - Constants.DAY_START; j++) {
-          if (schedules.getSchedules().get(i).get(j) != null && !restricted.get(i).get(j)) {
-            return false;
-          }
-        }
-      }
-
-      return true;
+      return !(schedules.getSchedules().get(day).get(time) != null || !restricted.get(day).get(time));
     }
   }
 }
